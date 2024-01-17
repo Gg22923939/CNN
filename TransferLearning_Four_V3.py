@@ -102,7 +102,7 @@ def get_callbacks():
     return callbacks
 
 #%%
-data_dir = os.path.join(r'C:\Users\user\Desktop\Python_Script\CNN\flower_photos')
+data_dir = os.path.join(r'C:\Users\user\Desktop\Python_Script\database\Eardrum_Four\output')
 data_dir = pathlib.Path(data_dir).with_suffix('')
 image_count = len(list(data_dir.glob('*/*.jpg')))
 print(image_count)
@@ -192,7 +192,7 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rat
 
 
 #%% Train the model
-initial_epochs = 30
+initial_epochs = 20
 callbacks=get_callbacks()
 loss0, accuracy0 = model.evaluate(validation_dataset)
 
@@ -206,7 +206,7 @@ history = model.fit(train_dataset,
 
 # =============================================================================
 # 將儲存的檢查點調用
-# model.load_weights(r'C:\Users\user\Desktop\Python_Script\CNN\Models\model_007-0.823.h5') #檔案名稱修改成想要的
+# model.load_weights(r'C:\Users\user\Desktop\Python_Script\CNN\Models\model_110-0.832.h5') #檔案名稱修改成想要的
 # =============================================================================
 
 #%% 繼續訓練
@@ -265,7 +265,7 @@ model.summary()
 print("Number of layers in the base model: ", len(base_model.layers))
 
 # Fine-tune from this layer onwards
-fine_tune_at = 50
+fine_tune_at = 10
 
 # Freeze all the layers before the `fine_tune_at` layer
 for layer in base_model.layers[:fine_tune_at]:
@@ -371,3 +371,13 @@ ax.set_title('Confusion matrix',fontsize = '18')
 ax.set_xlabel('Predicted',fontsize = '18')
 ax.set_ylabel('Actual',fontsize = '18')
 plt.show()
+
+
+#%% 儲存整個模型
+
+
+model.save(r'C:\Users\user\Desktop\Python_Script\CNN\Models\my_model\my_model.keras')
+new_model = tf.keras.models.load_model(r'C:\Users\user\Desktop\Python_Script\CNN\Models\my_model\my_model.keras')
+
+new_model.summary()
+
